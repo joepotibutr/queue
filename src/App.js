@@ -27,9 +27,9 @@ class App extends Component {
 
   addQueue = e => {
     const { patient , runQueue } = this.state
-    runQueue.enqueue(patient)
     e.preventDefault()
       if(patient.name && patient.emergencyCode){
+        runQueue.enqueue(patient)        
         this.resetForm()
       }
   }
@@ -62,15 +62,19 @@ class App extends Component {
     const nextQueue = runQueue.front()
     const lastQueue = runQueue.back()
     return (
-      <div>
+      <div style={{padding:'40px'}}>
         <div>
         <form onSubmit={this.addQueue}>
+          <h4>Patient Form</h4>
+          <label for="name">Patient Name : </label>
           <input 
             name="name" 
             type="text" 
             value={patient.name} 
             onChange={this.onInputChange}
           />
+          <br/><br/>
+          <label>Patient Priority : </label>
           <select 
             value={patient.emergencyCode}
             onChange={this.onDropdownChange}
@@ -83,6 +87,7 @@ class App extends Component {
             <option value={5}>5</option>
             <option value={6}>6</option>
           </select>
+          <br/><br/>
         <button>
           ADD QUEUE
         </button>
@@ -91,15 +96,16 @@ class App extends Component {
         <div>
           <h4>Queues : {runQueue.length()}</h4>
           <div>
-            <p>Next Queue</p>
-            {runQueue.front() && <label>{runQueue.front().name}</label>}<br/>
-            {runQueue.front() && <label>{runQueue.front().emergencyCode}</label>}
+            <h4>Next Queue</h4>
+            <label> Name : {runQueue.front() && runQueue.front().name}</label><br/>
+           <label> Priority : {runQueue.front() && runQueue.front().emergencyCode}</label>
           </div>
           <div>
-            <p>Last Queue</p>  
-            {runQueue.back() && <label>{runQueue.back().name}</label>}<br/>
-            {runQueue.back() && <label>{runQueue.back().emergencyCode}</label>}          
+            <h4>Last Queue</h4>  
+            <label>Name : {runQueue.back() && runQueue.back().name}</label><br/>
+           <label>Priority : {runQueue.back() && runQueue.back().emergencyCode} </label>        
           </div>
+          <br/>
           <div>
             <button onClick={this.currentQueue}>Next Queue</button>
           </div>
